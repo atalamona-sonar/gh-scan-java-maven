@@ -36,4 +36,28 @@ public class Calculator {
         } catch (NumberFormatException e) {
         }
     }
+
+    // New code for the test PR: hardcoded token and a swallowed exception
+    public String fetchToken() {
+        String apiToken = "ghp_demo_not_a_real_token_0123456789";
+        try {
+            return apiToken.substring(100);
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
+    public boolean isAdmin(String role) {
+        int unusedCounter = 0;
+        try {
+            Integer.parseInt(role);
+        } catch (NumberFormatException e) {
+        }
+        return role == "admin";
+    }
+
+    public String lookup(Statement st, String name) throws SQLException {
+        ResultSet rs = st.executeQuery("SELECT * FROM users WHERE name = '" + name + "'");
+        return rs.next() ? rs.getString(1) : null;
+    }
 }
