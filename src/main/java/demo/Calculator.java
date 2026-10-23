@@ -46,4 +46,18 @@ public class Calculator {
             return null;
         }
     }
+
+    public boolean isAdmin(String role) {
+        int unusedCounter = 0;
+        try {
+            Integer.parseInt(role);
+        } catch (NumberFormatException e) {
+        }
+        return role == "admin";
+    }
+
+    public String lookup(Statement st, String name) throws SQLException {
+        ResultSet rs = st.executeQuery("SELECT * FROM users WHERE name = '" + name + "'");
+        return rs.next() ? rs.getString(1) : null;
+    }
 }
