@@ -36,4 +36,14 @@ public class Calculator {
         } catch (NumberFormatException e) {
         }
     }
+
+    // New code for the test PR: hardcoded token and a swallowed exception
+    public String fetchToken() {
+        String apiToken = "ghp_demo_not_a_real_token_0123456789";
+        try {
+            return apiToken.substring(100);
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
 }
