@@ -1,0 +1,39 @@
+package demo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+/** Synthetic demo code with deliberate issues for scan exploration. */
+public class Calculator {
+
+    // Hotspot / vulnerability: hardcoded credential
+    private static final String DB_PASSWORD = "admin123";
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int divide(int a, int b) {
+        return a / b; // no zero check, left untested
+    }
+
+    // Vulnerability: SQL injection
+    public String findUser(String name) throws SQLException {
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:demo", "sa", DB_PASSWORD);
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT * FROM users WHERE name = '" + name + "'");
+        return rs.next() ? rs.getString(1) : null; // resources never closed
+    }
+
+    // Code smell: empty catch, unused variable
+    public void risky() {
+        int unused = 42;
+        try {
+            Integer.parseInt("x");
+        } catch (NumberFormatException e) {
+        }
+    }
+}

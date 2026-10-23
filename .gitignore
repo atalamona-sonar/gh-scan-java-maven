@@ -1,0 +1,11 @@
+target/
+build/
+.gradle/
+.venv/
+__pycache__/
+*.pyc
+coverage.xml
+.coverage
+.scannerwork/
+*.token
+.DS_Store
